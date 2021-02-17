@@ -1,0 +1,35 @@
+<div class="WMBOS">
+    <div @ref="WMBOSReference" class=" @CssClass">
+        @ChildContent
+    </div>
+</div>
+
+@code {
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    public string CssClass { get; set; }
+
+    [Parameter]
+    public WMBOSConfigurations Configurations { get; set; } = null;
+
+    [Inject]
+    protected IWMBOS TheWMBOS { get; set; } 
+
+    ElementReference WMBOSReference;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            if (Configurations == null) {
+                Configurations = new WMBOSConfigurations();
+            }
+            
+            await TheWMBOS.Init(WMBOSReference, Configurations);
+        }
+    }
+
+}
