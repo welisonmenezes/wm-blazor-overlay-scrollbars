@@ -6,6 +6,7 @@ export function WMBOSInit(element, configurations) {
 function WMBOSInitJS(element, configurations) {
     var config  = (configurations) ? configurations : {};
     OverlayScrollbars(element, config);
+    element.parentElement.classList.remove('loading');
 }
 
 function WMBOSRunInitAsync(element, configurations, callback) {

@@ -1,13 +1,23 @@
-<div class="WMBOS">
-    <div @ref="WMBOSReference" class=" @CssClass">
-        @ChildContent
+<div class="WMBOS loading">
+    <div @ref="WMBOSReference" class="WMBOS-content @CssClass">
+        @BlazorOverlayScrollbarsContent
     </div>
+    @if (BlazorOverlayScrollbarsLoading == null)
+    {
+        <div class="WMBOS-loading">Loading...</div>
+    }
+    else
+    {
+        <div class="WMBOS-loading">@BlazorOverlayScrollbarsLoading</div>
+    }
 </div>
 
 @code {
+    [Parameter]
+    public RenderFragment BlazorOverlayScrollbarsContent { get; set; }
 
     [Parameter]
-    public RenderFragment ChildContent { get; set; }
+    public RenderFragment BlazorOverlayScrollbarsLoading { get; set; }
 
     [Parameter]
     public string CssClass { get; set; }

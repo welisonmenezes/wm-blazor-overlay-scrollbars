@@ -1,0 +1,15 @@
+.WMBOS {
+    width: auto;
+}
+.WMBOS .WMBOS-loading {
+    display: none;
+}
+.WMBOS.loading .WMBOS-content {
+    opacity: 0;
+    height: 0;
+    overflow: hidden;
+    position: relative;
+}
+.WMBOS.loading .WMBOS-loading {
+    display: block;
+}
