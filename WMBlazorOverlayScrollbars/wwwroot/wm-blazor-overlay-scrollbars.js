@@ -39,18 +39,11 @@ function WMBOSLoadOverlayScrollbars(element, configurations) {
 }
 
 function WMBOSLoadOverlayScrollbarsTheme(configurations, themePath) {
-    console.log(themePath)
     // built-in styles
     WMBOSLoadStyles('overlay-scrollbars', './_content/WMBlazorOverlayScrollbars/themes/OverlayScrollbars.min.css');
-
-    // WMBOS themes
-    if (WMBOSGetTheme(configurations.className)) {
-        WMBOSLoadStyles(configurations.className, WMBOSGetTheme(configurations.className));
-    }
-
     // custom themes
-    if (WMBOSGetCustomThem(configurations.className, themePath)) {
-        WMBOSLoadStyles(configurations.className, WMBOSGetCustomThem(configurations.className, themePath));
+    if (WMBOSGetTheme(configurations.className, themePath)) {
+        WMBOSLoadStyles(configurations.className, WMBOSGetTheme(configurations.className, themePath));
     }
 }
 
@@ -95,16 +88,16 @@ function WMBOSHasTheme(className) {
     return (document.querySelector('#WMBOS-theme-' + className));
 }
 
-function WMBOSGetTheme(className) {
-    if (className === 'os-theme-thin-dark') {
-        return './_content/WMBlazorOverlayScrollbars/themes/os-theme-thin-dark.css';
-    }
-    return null;
-}
-
-function WMBOSGetCustomThem(className, themePath) {
+function WMBOSGetTheme(className, themePath) {
+    var themes = ['os-theme-block-dark', 'os-theme-block-light', 
+    'os-theme-minimal-dark', 'os-theme-minimal-light', 
+    'os-theme-round-dark', 'os-theme-round-light', 
+    'os-theme-thick-dark', 'os-theme-thick-light', 
+    'os-theme-thin-dark', 'os-theme-minimal-light'];
     if (className && themePath) {
         return themePath;
+    } else if (className && themes.includes(className)) {
+        return './_content/WMBlazorOverlayScrollbars/themes/' + className + '.css';
     }
     return null;
 }
