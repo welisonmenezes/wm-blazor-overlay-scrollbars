@@ -1,6 +1,7 @@
 public class WMBOSConfigurations
 {
     public string className { get; set; } = "os-theme-dark";
+    public string themePath { get; set; } = null;
     public string resize { get; set; } = "none";
     public bool sizeAutoCapable { get; set; } = true;
     public bool clipAlways { get; set; } = true;

@@ -1,5 +1,7 @@
 export function WMBOSInit(element, configurations) {
-    WMBOSLoadOverlayScrollbarsTheme(configurations);
+    var themePath = configurations.themePath;
+    delete configurations.themePath;
+    WMBOSLoadOverlayScrollbarsTheme(configurations, themePath);
     WMBOSLoadOverlayScrollbars(element, configurations);
 }
 
@@ -36,10 +38,19 @@ function WMBOSLoadOverlayScrollbars(element, configurations) {
     }
 }
 
-function WMBOSLoadOverlayScrollbarsTheme(configurations) {
+function WMBOSLoadOverlayScrollbarsTheme(configurations, themePath) {
+    console.log(themePath)
+    // built-in styles
     WMBOSLoadStyles('overlay-scrollbars', './_content/WMBlazorOverlayScrollbars/themes/OverlayScrollbars.min.css');
+
+    // WMBOS themes
     if (WMBOSGetTheme(configurations.className)) {
         WMBOSLoadStyles(configurations.className, WMBOSGetTheme(configurations.className));
+    }
+
+    // custom themes
+    if (WMBOSGetCustomThem(configurations.className, themePath)) {
+        WMBOSLoadStyles(configurations.className, WMBOSGetCustomThem(configurations.className, themePath));
     }
 }
 
@@ -87,6 +98,13 @@ function WMBOSHasTheme(className) {
 function WMBOSGetTheme(className) {
     if (className === 'os-theme-thin-dark') {
         return './_content/WMBlazorOverlayScrollbars/themes/os-theme-thin-dark.css';
+    }
+    return null;
+}
+
+function WMBOSGetCustomThem(className, themePath) {
+    if (className && themePath) {
+        return themePath;
     }
     return null;
 }
