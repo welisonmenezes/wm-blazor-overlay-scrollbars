@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
@@ -19,10 +20,10 @@ public sealed class WMBOSCore: IWMBOS
         //System.Console.WriteLine("Configure BlazorOverlayScrollbars");
     }
 
-    public async Task Init(ElementReference element, WMBOSConfigurations configurations)
+    public async Task Init(ElementReference element, WMBOSConfigurations configurations, Dictionary<string, string> callbacks)
     {
         var module = await this.Module;
-        await module.InvokeVoidAsync("WMBOSInit", element, configurations);
+        await module.InvokeVoidAsync("WMBOSInit", element, configurations, callbacks);
         this.element = element;
     }
 }

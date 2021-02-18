@@ -25,10 +25,17 @@
     [Parameter]
     public WMBOSConfigurations Configurations { get; set; } = null;
 
+    [Parameter]
+    public string ProjectName { get; set;}
+
+    [Parameter]
+    public string OnInitialized { get; set;}
+
     [Inject]
     protected IWMBOS TheWMBOS { get; set; } 
 
     ElementReference WMBOSReference;
+    public Dictionary<string, string> Callbacks;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -37,8 +44,12 @@
             if (Configurations == null) {
                 Configurations = new WMBOSConfigurations();
             }
+
+            Callbacks = new Dictionary<string, string>();
+                Callbacks["projectName"] = ProjectName;
+                Callbacks["onInitialized"] = OnInitialized;
             
-            await TheWMBOS.Init(WMBOSReference, Configurations);
+            await TheWMBOS.Init(WMBOSReference, Configurations, Callbacks);
         }
     }
 

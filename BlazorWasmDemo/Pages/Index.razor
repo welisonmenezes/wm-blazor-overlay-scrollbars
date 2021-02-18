@@ -6,7 +6,11 @@
 
     Welcome to your new app.
 
-    <BlazorOverlayScrollbars CssClass="h-200" Configurations="configurations">
+    <BlazorOverlayScrollbars
+        CssClass="h-200"
+        Configurations="configurations"
+        ProjectName="BlazorWasmDemo"
+        OnInitialized="MyOnInitialized">
         <BlazorOverlayScrollbarsContent>
             <div style="min-width: 2000px;">
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla maiores voluptas obcaecati temporibus ratione illum placeat, tempore corporis, recusandae, quos sint voluptatum adipisci ea nam commodi molestias inventore. Sint ipsam non repellendus similique quo distinctio cum officia aliquid facere aliquam repudiandae incidunt officiis illum nostrum id eaque amet deleniti sed a, soluta laboriosam quod veniam! Dicta non nostrum sapiente ab, beatae velit fuga eos quasi culpa ea consequatur, rem rerum enim consequuntur harum corrupti iure voluptates a neque illum vero obcaecati quidem optio? Possimus facilis cupiditate aspernatur maxime ipsum, ex ea itaque omnis libero nostrum nam suscipit dolor nihil labore.</p>
@@ -77,5 +81,11 @@
             themePath = "https://kingsora.github.io/OverlayScrollbars/etc/os-theme-block-dark.css"
         };
         configurations.overflowBehavior.x = "hidden";
+    }
+
+    [JSInvokable]
+    public static void MyOnInitialized()
+    {
+        System.Console.WriteLine("MyOnInitialized Called!");
     }
 }

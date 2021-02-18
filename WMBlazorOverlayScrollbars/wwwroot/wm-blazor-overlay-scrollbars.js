@@ -1,39 +1,53 @@
-export function WMBOSInit(element, configurations) {
+export function WMBOSInit(element, configurations, callbacks) {
     var themePath = configurations.themePath;
     delete configurations.themePath;
     WMBOSLoadOverlayScrollbarsTheme(configurations, themePath);
-    WMBOSLoadOverlayScrollbars(element, configurations);
+    WMBOSLoadOverlayScrollbars(element, configurations, callbacks);
 }
 
-function WMBOSInitJS(element, configurations) {
+function WMBOSInitJS(element, configurations, callbacks) {
     var config  = (configurations) ? configurations : {};
+    WMBOSInitCallbacks(config, element, callbacks);
     OverlayScrollbars(element, config);
+}
+
+function WMBOSInitCallbacks(config, element, callbacks) {
+    config.callbacks = {
+        onInitialized: function() {  WMBOSCOnInitialized(element, callbacks); }
+    };
+}
+
+function WMBOSCOnInitialized(element, callbacks) {
+    if(callbacks && callbacks['projectName'] && callbacks['onInitialized']) {
+        DotNet.invokeMethodAsync('BlazorWasmDemo', 'MyOnInitialized');
+    }
     element.parentElement.classList.remove('loading');
 }
 
-function WMBOSRunInitAsync(element, configurations, callback) {
+function WMBOSRunInitAsync(element, configurations, callbacks, callback) {
     var timer;
     try {
-        callback(element, configurations);
+        callback(element, configurations, callbacks);
     } catch (error) {
         timer = setInterval(() => {
             try {
-                callback(element, configurations);
+                callback(element, configurations, callbacks);
                 clearInterval(timer);
             } catch (error) {}
         }, 100);
     }
 }
 
-function WMBOSLoadOverlayScrollbars(element, configurations) {
+function WMBOSLoadOverlayScrollbars(element, configurations, callbacks) {
     if (WMBOSHasScripts()) {
-        WMBOSRunInitAsync(element, configurations, WMBOSInitJS);
+        WMBOSRunInitAsync(element, configurations, callbacks, WMBOSInitJS);
     } else {
         return WMBOSLoadScript(
             './_content/WMBlazorOverlayScrollbars/OverlayScrollbars.min.js',
             WMBOSInitJS,
             element,
-            configurations
+            configurations,
+            callbacks
         );
     }
 }
@@ -58,7 +72,7 @@ function WMBOSLoadStyles(className, path) {
     }
 }
 
-function WMBOSLoadScript(src, callback, element, configurations) {
+function WMBOSLoadScript(src, callback, element, configurations, callbacks) {
     var s, r, t;
     r = false;
     s = document.createElement('script');
@@ -69,7 +83,7 @@ function WMBOSLoadScript(src, callback, element, configurations) {
         if (!r && (!this.readyState || this.readyState === 'complete')) {
             r = true;
             if (callback && element) {
-                callback(element, configurations);
+                callback(element, configurations, callbacks);
             }
             return true;
         } else {
