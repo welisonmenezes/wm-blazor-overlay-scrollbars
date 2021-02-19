@@ -6,4 +6,6 @@ public interface IWMBOS
 {
     void Configure();
     Task Init(ElementReference element, WMBOSConfigurations configurations, Dictionary<string, string> callbacks);
+    Task Destroy(string referenceId);
+    Task Constroy(ElementReference element, WMBOSConfigurations configurations, Dictionary<string, string> callbacks);
 }

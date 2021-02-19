@@ -1,5 +1,5 @@
 <div class="WMBOS loading">
-    <div @ref="WMBOSReference" class="WMBOS-content @CssClass">
+    <div @ref="WMBOSReference" class="WMBOS-content @CssClass" data-reference-id="@ReferenceId">
         @BlazorOverlayScrollbarsContent
     </div>
     @if (BlazorOverlayScrollbarsLoading == null)
@@ -11,6 +11,8 @@
         <div class="WMBOS-loading">@BlazorOverlayScrollbarsLoading</div>
     }
 </div>
+
+@implements IDisposable
 
 @code {
     [Parameter]
@@ -26,16 +28,22 @@
     public WMBOSConfigurations Configurations { get; set; } = null;
 
     [Parameter]
-    public string ProjectName { get; set;}
+    public string ProjectName { get; set; }
 
     [Parameter]
-    public string OnInitialized { get; set;}
+    public string CallbackOnInitialized { get; set; }
 
     [Inject]
     protected IWMBOS TheWMBOS { get; set; } 
 
     ElementReference WMBOSReference;
     public Dictionary<string, string> Callbacks;
+    private string ReferenceId;
+
+    protected override void OnInitialized()
+    {
+        ReferenceId = GenerateID();
+    }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -47,10 +55,29 @@
 
             Callbacks = new Dictionary<string, string>();
                 Callbacks["projectName"] = ProjectName;
-                Callbacks["onInitialized"] = OnInitialized;
+                Callbacks["onInitialized"] = CallbackOnInitialized;
             
             await TheWMBOS.Init(WMBOSReference, Configurations, Callbacks);
         }
     }
 
+    public void Dispose()
+    {
+        TheWMBOS.Destroy(ReferenceId);
+    }
+
+    private string GenerateID()
+    {
+        return Guid.NewGuid().ToString("N");
+    }
+
+    public async Task Destroy()
+    {
+        await TheWMBOS.Destroy(ReferenceId);
+    }
+
+    public async Task Constroy()
+    {
+       await TheWMBOS.Init(WMBOSReference, Configurations, Callbacks);
+    }
 }

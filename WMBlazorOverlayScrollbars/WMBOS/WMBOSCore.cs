@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using WMBlazorOverlayScrollbars.WMBOS;
 
 public sealed class WMBOSCore: IWMBOS
 {
@@ -25,5 +26,16 @@ public sealed class WMBOSCore: IWMBOS
         var module = await this.Module;
         await module.InvokeVoidAsync("WMBOSInit", element, configurations, callbacks);
         this.element = element;
+    }
+
+    public async Task Destroy(string referenceId)
+    {
+        var module = await this.Module;
+        await module.InvokeVoidAsync("WMBOSDestroy", referenceId);
+    }
+
+    public async Task Constroy(ElementReference element, WMBOSConfigurations configurations, Dictionary<string, string> callbacks)
+    {
+        await this.Init(element, configurations, callbacks);
     }
 }

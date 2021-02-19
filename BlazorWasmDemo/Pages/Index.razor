@@ -7,10 +7,11 @@
     Welcome to your new app.
 
     <BlazorOverlayScrollbars
+        @ref="theOverlay"
         CssClass="h-200"
         Configurations="configurations"
         ProjectName="BlazorWasmDemo"
-        OnInitialized="MyOnInitialized">
+        CallbackOnInitialized="MyOnInitialized">
         <BlazorOverlayScrollbarsContent>
             <div style="min-width: 2000px;">
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla maiores voluptas obcaecati temporibus ratione illum placeat, tempore corporis, recusandae, quos sint voluptatum adipisci ea nam commodi molestias inventore. Sint ipsam non repellendus similique quo distinctio cum officia aliquid facere aliquam repudiandae incidunt officiis illum nostrum id eaque amet deleniti sed a, soluta laboriosam quod veniam! Dicta non nostrum sapiente ab, beatae velit fuga eos quasi culpa ea consequatur, rem rerum enim consequuntur harum corrupti iure voluptates a neque illum vero obcaecati quidem optio? Possimus facilis cupiditate aspernatur maxime ipsum, ex ea itaque omnis libero nostrum nam suscipit dolor nihil labore.</p>
@@ -67,12 +68,22 @@
         </BlazorOverlayScrollbarsLoading>
     </BlazorOverlayScrollbars>
 
+    <br><hr><br>
+
+    <div>
+        <button class="btn btn-primary btn-sm" @onclick="@(e => MyDestroy())">Destroy</button>
+        <button class="btn btn-primary btn-sm" @onclick="@(e => MyConstroy())">Constroy</button>
+    </div>
+
+    <br><br><br>
+
     <SurveyPrompt Title="How is Blazor working for you?" />
 
 </div>
 
 @code {
     public WMBOSConfigurations configurations;
+    public BlazorOverlayScrollbars theOverlay;
 
     protected override void OnInitialized()
     {
@@ -87,5 +98,15 @@
     public static void MyOnInitialized()
     {
         System.Console.WriteLine("MyOnInitialized Called!");
+    }
+
+    public async void MyConstroy() 
+    {
+        await theOverlay.Constroy();
+    }
+
+    public async void MyDestroy() 
+    {
+        await theOverlay.Destroy();
     }
 }

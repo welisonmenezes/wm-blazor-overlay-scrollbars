@@ -1,3 +1,5 @@
+window['WMBOSInstances'] = {};
+
 export function WMBOSInit(element, configurations, callbacks) {
     var themePath = configurations.themePath;
     delete configurations.themePath;
@@ -5,16 +7,29 @@ export function WMBOSInit(element, configurations, callbacks) {
     WMBOSLoadOverlayScrollbars(element, configurations, callbacks);
 }
 
+export function WMBOSDestroy(referenceId) {
+    var instance = window['WMBOSInstances'][referenceId];
+    if (instance) {
+        instance.destroy();
+    }
+    delete window['WMBOSInstances'][referenceId];
+}
+
 function WMBOSInitJS(element, configurations, callbacks) {
     var config  = (configurations) ? configurations : {};
     WMBOSInitCallbacks(config, element, callbacks);
-    OverlayScrollbars(element, config);
+    window['WMBOSInstances'][WMBOSGetReferenceId(element)] = OverlayScrollbars(element, config);
+    console.log(window['WMBOSInstances']);
 }
 
 function WMBOSInitCallbacks(config, element, callbacks) {
     config.callbacks = {
         onInitialized: function() {  WMBOSCOnInitialized(element, callbacks); }
     };
+}
+
+function WMBOSGetReferenceId(element) {
+    return element.getAttribute('data-reference-id');
 }
 
 function WMBOSCOnInitialized(element, callbacks) {
@@ -53,9 +68,7 @@ function WMBOSLoadOverlayScrollbars(element, configurations, callbacks) {
 }
 
 function WMBOSLoadOverlayScrollbarsTheme(configurations, themePath) {
-    // built-in styles
     WMBOSLoadStyles('overlay-scrollbars', './_content/WMBlazorOverlayScrollbars/themes/OverlayScrollbars.min.css');
-    // custom themes
     if (WMBOSGetTheme(configurations.className, themePath)) {
         WMBOSLoadStyles(configurations.className, WMBOSGetTheme(configurations.className, themePath));
     }
