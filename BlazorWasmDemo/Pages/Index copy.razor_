@@ -1,9 +1,9 @@
-﻿@page "/"
-
+﻿
 <div>
 
-    <h1>Blazor Overlay Scrollbars Demo</h1>
-    <p>A Blazor scrollbar component which hides native scrollbars, provides custom styleable overlay scrollbars and keeps the native functionality and feeling.</p>
+    <h1>Hello, world!</h1>
+
+    Welcome to your new app.
 
     <br><hr><br>
 
@@ -63,6 +63,29 @@
     </div>
 
     <br><br><br>
+
+    <h2>Textarea Sample</h2>
+    <BlazorOverlayScrollbars>
+        <BlazorOverlayScrollbarsContent>
+            <textarea class="form-control"></textarea>
+        </BlazorOverlayScrollbarsContent>
+        <BlazorOverlayScrollbarsLoading>
+            <b>Carregando...</b>
+        </BlazorOverlayScrollbarsLoading>
+    </BlazorOverlayScrollbars>
+
+    <br><hr><br>
+
+    <BlazorOverlayScrollbars>
+        <BlazorOverlayScrollbarsContent>
+            <iframe src="iframe-sample.html"></iframe>
+        </BlazorOverlayScrollbarsContent>
+        <BlazorOverlayScrollbarsLoading>
+            <b>Carregando...</b>
+        </BlazorOverlayScrollbarsLoading>
+    </BlazorOverlayScrollbars>
+
+    <br><hr><br>
 
 </div>
 

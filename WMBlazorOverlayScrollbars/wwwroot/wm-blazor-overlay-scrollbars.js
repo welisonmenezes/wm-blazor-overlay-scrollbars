@@ -169,7 +169,7 @@ function WMBOSGetTheme(className, themePath) {
         'os-theme-thick-dark',
         'os-theme-thick-light',
         'os-theme-thin-dark',
-        'os-theme-minimal-light'
+        'os-theme-thin-light'
     ];
     if (className && themePath)
         return themePath;

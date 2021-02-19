@@ -6,6 +6,28 @@
 
 .main {
     flex: 1;
+    overflow: hidden;
+}
+
+
+::deep .os-host {
+    height: 200px;
+    max-width: 600px;
+}
+::deep .os-host-textarea {
+    height: 150px;
+    max-width: 400px;
+}
+::deep iframe {
+    display: block;
+    border: none;
+    width: 100%;
+    max-width: 600px;
+    height: 250px;
+}
+::deep .main > .WMBOS > .os-host {
+    height: 100vh;
+    max-width: none;
 }
 
 .sidebar {
@@ -19,6 +41,7 @@
     height: 3.5rem;
     display: flex;
     align-items: center;
+    z-index: 9;
 }
 
     .top-row ::deep a, .top-row .btn-link {
@@ -43,6 +66,10 @@
     .top-row a, .top-row .btn-link {
         margin-left: 0;
     }
+
+    .main ::deep > .WMBOS > .os-host {
+        height: calc(100vh - 56px);
+    }
 }
 
 @media (min-width: 641px) {
@@ -64,7 +91,6 @@
     .top-row {
         position: sticky;
         top: 0;
-        z-index: 1;
     }
 
     .main > div {

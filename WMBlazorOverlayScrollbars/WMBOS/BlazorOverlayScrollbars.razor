@@ -1,5 +1,5 @@
 <div class="WMBOS loading">
-    <div @ref="WMBOSReference" class="WMBOS-content @CssClass" data-reference-id="@ReferenceId">
+    <div @ref="WMBOSReference" class="WMBOS-content @CssClass" id="@Id" data-reference-id="@ReferenceId">
         @BlazorOverlayScrollbarsContent
     </div>
     @if (BlazorOverlayScrollbarsLoading == null)
@@ -23,6 +23,9 @@
 
     [Parameter]
     public string CssClass { get; set; }
+
+    [Parameter]
+    public string Id { get; set; }
 
     [Parameter]
     public WMBOSConfigurations Configurations { get; set; } = null;
