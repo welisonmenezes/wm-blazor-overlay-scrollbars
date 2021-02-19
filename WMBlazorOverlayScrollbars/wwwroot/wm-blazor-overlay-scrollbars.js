@@ -54,6 +54,7 @@ function WMBOSInitJS(element, configurations, callbacks) {
     } else if (element.firstElementChild &&
         element.firstElementChild.tagName.toUpperCase() === 'IFRAME' &&
         element.childElementCount === 1) {
+            WMBOSInitIframeAsync(element, config, themePath);
             element.firstElementChild.onload = function() {
                 WMBOSInitIframeAsync(element, config, themePath);
             }
@@ -163,7 +164,6 @@ function WMBOSInitIframeAsync(element, config, themePath) {
             } catch (error) {}
         }, 100);
     }
-    
 }
 
 function WMBOSLoadOverlayScrollbars(element, configurations, callbacks) {

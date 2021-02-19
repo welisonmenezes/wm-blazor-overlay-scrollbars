@@ -6,6 +6,8 @@
 
     Welcome to your new app.
 
+    <br><hr><br>
+
     <BlazorOverlayScrollbars
         @ref="theOverlay"
         CssClass="h-200"
@@ -22,6 +24,7 @@
         CallbackOnUpdated="MyOnUpdated">
         <BlazorOverlayScrollbarsContent>
             <div style="min-width: 2000px;">
+                <h2>Html Content Sample</h2>
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla maiores voluptas obcaecati temporibus ratione illum placeat, tempore corporis, recusandae, quos sint voluptatum adipisci ea nam commodi molestias inventore. Sint ipsam non repellendus similique quo distinctio cum officia aliquid facere aliquam repudiandae incidunt officiis illum nostrum id eaque amet deleniti sed a, soluta laboriosam quod veniam! Dicta non nostrum sapiente ab, beatae velit fuga eos quasi culpa ea consequatur, rem rerum enim consequuntur harum corrupti iure voluptates a neque illum vero obcaecati quidem optio? Possimus facilis cupiditate aspernatur maxime ipsum, ex ea itaque omnis libero nostrum nam suscipit dolor nihil labore.</p>
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla maiores voluptas obcaecati temporibus ratione illum placeat, tempore corporis, recusandae, quos sint voluptatum adipisci ea nam commodi molestias inventore. Sint ipsam non repellendus similique quo distinctio cum officia aliquid facere aliquam repudiandae incidunt officiis illum nostrum id eaque amet deleniti sed a, soluta laboriosam quod veniam! Dicta non nostrum sapiente ab, beatae velit fuga eos quasi culpa ea consequatur, rem rerum enim consequuntur harum corrupti iure voluptates a neque illum vero obcaecati quidem optio? Possimus facilis cupiditate aspernatur maxime ipsum, ex ea itaque omnis libero nostrum nam suscipit dolor nihil labore.</p>
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla maiores voluptas obcaecati temporibus ratione illum placeat, tempore corporis, recusandae, quos sint voluptatum adipisci ea nam commodi molestias inventore. Sint ipsam non repellendus similique quo distinctio cum officia aliquid facere aliquam repudiandae incidunt officiis illum nostrum id eaque amet deleniti sed a, soluta laboriosam quod veniam! Dicta non nostrum sapiente ab, beatae velit fuga eos quasi culpa ea consequatur, rem rerum enim consequuntur harum corrupti iure voluptates a neque illum vero obcaecati quidem optio? Possimus facilis cupiditate aspernatur maxime ipsum, ex ea itaque omnis libero nostrum nam suscipit dolor nihil labore.</p>
@@ -49,6 +52,20 @@
 
     <br><hr><br>
 
+    <div>
+        <button class="btn btn-primary btn-sm" @onclick="@(e => ToggleContentSize())">Toggle Content Size</button>
+        <button class="btn btn-primary btn-sm" @onclick="@(e => MyDestroy())">Destroy</button>
+        <button class="btn btn-primary btn-sm" @onclick="@(e => MyConstroy())">Constroy</button>
+        <button class="btn btn-primary btn-sm" @onclick="@(e => MyUpdate())">Update</button>
+        <button class="btn btn-primary btn-sm" @onclick="@(e => MyScroll(null, "50%"))">Scroll to X 50%</button>
+        <button class="btn btn-primary btn-sm" @onclick="@(e => MyScroll(0, 0))">Scroll to X 0</button>
+        <button class="btn btn-primary btn-sm" @onclick="@(e => MySleep())">Sleep</button>
+        <button class="btn btn-primary btn-sm" @onclick="@(e => MyScrollStop())">Scroll Stop</button>
+    </div>
+
+    <br><br><br>
+
+    <h2>Textarea Sample</h2>
     <BlazorOverlayScrollbars>
         <BlazorOverlayScrollbarsContent>
             <textarea class="form-control"></textarea>
@@ -70,19 +87,6 @@
     </BlazorOverlayScrollbars>
 
     <br><hr><br>
-
-    <div>
-        <button class="btn btn-primary btn-sm" @onclick="@(e => ToggleContentSize())">Toggle Content Size</button>
-        <button class="btn btn-primary btn-sm" @onclick="@(e => MyDestroy())">Destroy</button>
-        <button class="btn btn-primary btn-sm" @onclick="@(e => MyConstroy())">Constroy</button>
-        <button class="btn btn-primary btn-sm" @onclick="@(e => MyUpdate())">Update</button>
-        <button class="btn btn-primary btn-sm" @onclick="@(e => MyScroll(null, "50%"))">Scroll to X 50%</button>
-        <button class="btn btn-primary btn-sm" @onclick="@(e => MyScroll(0, 0))">Scroll to X 0</button>
-        <button class="btn btn-primary btn-sm" @onclick="@(e => MySleep())">Sleep</button>
-        <button class="btn btn-primary btn-sm" @onclick="@(e => MyScrollStop())">Scroll Stop</button>
-    </div>
-
-    <br><br><br>
 
     <SurveyPrompt Title="How is Blazor working for you?" />
 
