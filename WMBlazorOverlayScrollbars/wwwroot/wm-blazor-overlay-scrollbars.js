@@ -2,8 +2,7 @@ window['WMBOSInstances'] = {};
 
 export function WMBOSInit(element, configurations, callbacks) {
     var themePath = configurations.themePath;
-    delete configurations.themePath;
-    WMBOSLoadOverlayScrollbarsTheme(configurations, themePath);
+    WMBOSLoadOverlayScrollbarsTheme(element, configurations, themePath);
     WMBOSLoadOverlayScrollbars(element, configurations, callbacks);
 }
 
@@ -45,9 +44,22 @@ export function WMBOSScrollStop(referenceId, force) {
 
 function WMBOSInitJS(element, configurations, callbacks) {
     var config  = (configurations) ? configurations : {};
+    var themePath = configurations.themePath;
+    delete configurations.themePath;
     WMBOSInitCallbacks(config, element, callbacks);
-    window['WMBOSInstances'][WMBOSGetReferenceId(element)] = OverlayScrollbars(element, config);
-    console.log(window['WMBOSInstances']);
+    if (element.firstElementChild &&
+        element.firstElementChild.tagName.toUpperCase() === 'TEXTAREA' &&
+        element.childElementCount === 1) {
+        window['WMBOSInstances'][WMBOSGetReferenceId(element.firstElementChild)] = OverlayScrollbars(element.firstElementChild, config);
+    } else if (element.firstElementChild &&
+        element.firstElementChild.tagName.toUpperCase() === 'IFRAME' &&
+        element.childElementCount === 1) {
+            element.firstElementChild.onload = function() {
+                WMBOSInitIframeAsync(element, config, themePath);
+            }
+    } else {
+        window['WMBOSInstances'][WMBOSGetReferenceId(element)] = OverlayScrollbars(element, config);
+    }
 }
 
 function WMBOSGetReferenceId(element) {
@@ -137,6 +149,23 @@ function WMBOSRunInitAsync(element, configurations, callbacks, callback) {
     }
 }
 
+function WMBOSInitIframeAsync(element, config, themePath) {
+    var timer;
+    try {
+        window['WMBOSInstances'][WMBOSGetReferenceId(element.firstElementChild)] = OverlayScrollbars(element.firstElementChild.contentWindow.document.body, config);
+        WMBOSLoadOverlayScrollbarsTheme(element.firstElementChild, config, themePath);
+    } catch (error) {
+        timer = setInterval(() => {
+            try {
+                window['WMBOSInstances'][WMBOSGetReferenceId(element.firstElementChild)] = OverlayScrollbars(element.firstElementChild.contentWindow.document.body, config);
+                WMBOSLoadOverlayScrollbarsTheme(element.firstElementChild, config, themePath);
+                clearInterval(timer);
+            } catch (error) {}
+        }, 100);
+    }
+    
+}
+
 function WMBOSLoadOverlayScrollbars(element, configurations, callbacks) {
     if (WMBOSHasScripts()) {
         WMBOSRunInitAsync(element, configurations, callbacks, WMBOSInitJS);
@@ -151,21 +180,25 @@ function WMBOSLoadOverlayScrollbars(element, configurations, callbacks) {
     }
 }
 
-function WMBOSLoadOverlayScrollbarsTheme(configurations, themePath) {
-    WMBOSLoadStyles('overlay-scrollbars', './_content/WMBlazorOverlayScrollbars/themes/OverlayScrollbars.min.css');
+function WMBOSLoadOverlayScrollbarsTheme(element, configurations, themePath) {
+    WMBOSLoadStyles(element, 'overlay-scrollbars', './_content/WMBlazorOverlayScrollbars/themes/OverlayScrollbars.min.css');
     if (WMBOSGetTheme(configurations.className, themePath)) {
-        WMBOSLoadStyles(configurations.className, WMBOSGetTheme(configurations.className, themePath));
+        WMBOSLoadStyles(element, configurations.className, WMBOSGetTheme(configurations.className, themePath));
     }
 }
 
-function WMBOSLoadStyles(className, path) {
-    if (!WMBOSHasTheme(className)) {
+function WMBOSLoadStyles(element, className, path) {
+    if (!WMBOSHasTheme(element, className)) {
         var link = document.createElement('link');  
         link.rel = 'stylesheet';  
         link.type = 'text/css'; 
         link.href = path;
-        link.id = 'WMBOS-theme-' + className;  
-        document.getElementsByTagName('HEAD')[0].appendChild(link);
+        link.id = 'WMBOS-theme-' + className;
+        if (element.tagName.toUpperCase() === 'IFRAME') {
+            element.contentWindow.document.getElementsByTagName('HEAD')[0].appendChild(link);
+        } else {
+            document.getElementsByTagName('HEAD')[0].appendChild(link);
+        }
     }
 }
 
@@ -195,7 +228,10 @@ function WMBOSHasScripts() {
     return (document.querySelector('#WMBOS-scripts-overlay-scrollbars'));
 }
 
-function WMBOSHasTheme(className) {
+function WMBOSHasTheme(element, className) {
+    if (element.tagName.toUpperCase() === 'IFRAME') {
+        return (element.contentWindow.document.querySelector('#WMBOS-theme-' + className));
+    }
     return (document.querySelector('#WMBOS-theme-' + className));
 }
 
