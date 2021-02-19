@@ -7,132 +7,67 @@ export function WMBOSInit(element, configurations, callbacks) {
 }
 
 export function WMBOSDestroy(referenceId) {
-    var instance = window['WMBOSInstances'][referenceId];
-    if (instance) {
-        instance.destroy();
-    }
+    if (window['WMBOSInstances'][referenceId])  window['WMBOSInstances'][referenceId].destroy();
     delete window['WMBOSInstances'][referenceId];
 }
 
 export function WMBOSUpdate(referenceId, force) {
-    var instance = window['WMBOSInstances'][referenceId];
-    if (instance) {
-        instance.update(force);
-    }
+    if (window['WMBOSInstances'][referenceId]) window['WMBOSInstances'][referenceId].update(force);
 }
 
 export function WMBOSScroll(referenceId, x, y, duration) {
-    var instance = window['WMBOSInstances'][referenceId];
-    if (instance) {
-        instance.scroll({x: x, y: y}, duration);
-    }
+    if (window['WMBOSInstances'][referenceId]) window['WMBOSInstances'][referenceId].scroll({x: x, y: y}, duration);
 }
 
 export function WMBOSSleep(referenceId, force) {
-    var instance = window['WMBOSInstances'][referenceId];
-    if (instance) {
-        instance.sleep(force);
-    }
+    if (window['WMBOSInstances'][referenceId]) window['WMBOSInstances'][referenceId].sleep(force);
 }
 
 export function WMBOSScrollStop(referenceId, force) {
-    var instance = window['WMBOSInstances'][referenceId];
-    if (instance) {
-        instance.scrollStop(force);
-    }
+    if (window['WMBOSInstances'][referenceId]) window['WMBOSInstances'][referenceId].scrollStop(force);
 }
 
 function WMBOSInitJS(element, configurations, callbacks) {
-    var config  = (configurations) ? configurations : {};
     var themePath = configurations.themePath;
     delete configurations.themePath;
-    WMBOSInitCallbacks(config, element, callbacks);
+    WMBOSInitCallbacks(configurations, element, callbacks);
     if (element.firstElementChild &&
         element.firstElementChild.tagName.toUpperCase() === 'TEXTAREA' &&
         element.childElementCount === 1) {
-        window['WMBOSInstances'][WMBOSGetReferenceId(element.firstElementChild)] = OverlayScrollbars(element.firstElementChild, config);
+        window['WMBOSInstances'][WMBOSGetReferenceId(element)] = OverlayScrollbars(element.firstElementChild, configurations);
     } else if (element.firstElementChild &&
         element.firstElementChild.tagName.toUpperCase() === 'IFRAME' &&
         element.childElementCount === 1) {
-            WMBOSInitIframeAsync(element, config, themePath);
-            element.firstElementChild.onload = function() {
-                WMBOSInitIframeAsync(element, config, themePath);
-            }
+            WMBOSInitIframeAsync(element, configurations, themePath);
+            element.firstElementChild.onload = function() { WMBOSInitIframeAsync(element, configurations, themePath); }
     } else {
-        window['WMBOSInstances'][WMBOSGetReferenceId(element)] = OverlayScrollbars(element, config);
+        window['WMBOSInstances'][WMBOSGetReferenceId(element)] = OverlayScrollbars(element, configurations);
     }
-}
-
-function WMBOSGetReferenceId(element) {
-    return element.getAttribute('data-reference-id');
 }
 
 function WMBOSInitCallbacks(config, element, callbacks) {
-    config.callbacks = {
-        onInitialized: function() {  WMBOSCOnInitialized(element, callbacks); },
-        onInitializationWithdrawn: function() {  WMBOSCOnInitializationWithdrawn(callbacks); },
-        onDestroyed: function() {  WMBOSCOnDestroyed(callbacks); },
-        onScrollStart: function() {  WMBOSCOnScrollStart(callbacks); },
-        onScroll: function() {  WMBOSCOnScroll(callbacks); },
-        onScrollStop: function() {  WMBOSCOnScrollStop(callbacks); },
-        onContentSizeChanged: function() {  WMBOSCOnContentSizeChanged(callbacks); },
-        onHostSizeChanged: function() {  WMBOSCOnHostSizeChanged(callbacks); },
-        onUpdated: function() {  WMBOSCOnUpdated(callbacks); }
-    };
-}
-
-function WMBOSCOnInitialized(element, callbacks) {
-    if(callbacks && callbacks['projectName'] && callbacks['onInitialized']) {
-        DotNet.invokeMethodAsync(callbacks['projectName'], callbacks['onInitialized']);
-    }
-    element.parentElement.classList.remove('loading');
-}
-
-function WMBOSCOnInitializationWithdrawn(callbacks) {
-    if(callbacks && callbacks['projectName'] && callbacks['onInitializationWithdrawn']) {
-        DotNet.invokeMethodAsync(callbacks['projectName'], callbacks['onInitializationWithdrawn']);
-    }
-}
-
-function WMBOSCOnDestroyed(callbacks) {
-    if(callbacks && callbacks['projectName'] && callbacks['onDestroyed']) {
-        DotNet.invokeMethodAsync(callbacks['projectName'], callbacks['onDestroyed']);
-    }
-}
-
-function WMBOSCOnScrollStart(callbacks) {
-    if(callbacks && callbacks['projectName'] && callbacks['onScrollStart']) {
-        DotNet.invokeMethodAsync(callbacks['projectName'], callbacks['onScrollStart']);
-    }
-}
-
-function WMBOSCOnScroll(callbacks) {
-    if(callbacks && callbacks['projectName'] && callbacks['onScroll']) {
-        DotNet.invokeMethodAsync(callbacks['projectName'], callbacks['onScroll']);
-    }
-}
-
-function WMBOSCOnScrollStop(callbacks) {
-    if(callbacks && callbacks['projectName'] && callbacks['onScrollStop']) {
-        DotNet.invokeMethodAsync(callbacks['projectName'], callbacks['onScrollStop']);
-    }
-}
-
-function WMBOSCOnContentSizeChanged(callbacks) {
-    if(callbacks && callbacks['projectName'] && callbacks['onContentSizeChanged']) {
-        DotNet.invokeMethodAsync(callbacks['projectName'], callbacks['onContentSizeChanged']);
-    }
-}
-
-function WMBOSCOnHostSizeChanged(callbacks) {
-    if(callbacks && callbacks['projectName'] && callbacks['onHostSizeChanged']) {
-        DotNet.invokeMethodAsync(callbacks['projectName'], callbacks['onHostSizeChanged']);
-    }
-}
-
-function WMBOSCOnUpdated(callbacks) {
-    if(callbacks && callbacks['projectName'] && callbacks['onUpdated']) {
-        DotNet.invokeMethodAsync(callbacks['projectName'], callbacks['onUpdated']);
+    var allCallbacks = [
+        'onInitialized',
+        'onInitializationWithdrawn',
+        'onDestroyed',
+        'onScrollStart',
+        'onScroll',
+        'onScrollStop',
+        'onContentSizeChanged',
+        'onHostSizeChanged',
+        'onUpdated',
+    ];
+    config.callbacks = {};
+    for (var i = 0; i < allCallbacks.length; i++) {
+        config.callbacks[allCallbacks[i]] = (function() {
+            var theCallback = allCallbacks[i];
+            return function() {
+                if(callbacks && callbacks['projectName'] && callbacks[theCallback])
+                    DotNet.invokeMethodAsync(callbacks['projectName'], callbacks[theCallback]);
+                if (theCallback === 'onInitialized')
+                    element.parentElement.classList.remove('loading');
+            }
+        })();
     }
 }
 
@@ -153,12 +88,12 @@ function WMBOSRunInitAsync(element, configurations, callbacks, callback) {
 function WMBOSInitIframeAsync(element, config, themePath) {
     var timer;
     try {
-        window['WMBOSInstances'][WMBOSGetReferenceId(element.firstElementChild)] = OverlayScrollbars(element.firstElementChild.contentWindow.document.body, config);
+        window['WMBOSInstances'][WMBOSGetReferenceId(element)] = OverlayScrollbars(element.firstElementChild.contentWindow.document.body, config);
         WMBOSLoadOverlayScrollbarsTheme(element.firstElementChild, config, themePath);
     } catch (error) {
         timer = setInterval(() => {
             try {
-                window['WMBOSInstances'][WMBOSGetReferenceId(element.firstElementChild)] = OverlayScrollbars(element.firstElementChild.contentWindow.document.body, config);
+                window['WMBOSInstances'][WMBOSGetReferenceId(element)] = OverlayScrollbars(element.firstElementChild.contentWindow.document.body, config);
                 WMBOSLoadOverlayScrollbarsTheme(element.firstElementChild, config, themePath);
                 clearInterval(timer);
             } catch (error) {}
@@ -167,24 +102,16 @@ function WMBOSInitIframeAsync(element, config, themePath) {
 }
 
 function WMBOSLoadOverlayScrollbars(element, configurations, callbacks) {
-    if (WMBOSHasScripts()) {
+    if (WMBOSHasScripts())
         WMBOSRunInitAsync(element, configurations, callbacks, WMBOSInitJS);
-    } else {
-        return WMBOSLoadScript(
-            './_content/WMBlazorOverlayScrollbars/OverlayScrollbars.min.js',
-            WMBOSInitJS,
-            element,
-            configurations,
-            callbacks
-        );
-    }
+    else
+        return WMBOSLoadScript('./_content/WMBlazorOverlayScrollbars/OverlayScrollbars.min.js', WMBOSInitJS, element, configurations, callbacks);
 }
 
 function WMBOSLoadOverlayScrollbarsTheme(element, configurations, themePath) {
     WMBOSLoadStyles(element, 'overlay-scrollbars', './_content/WMBlazorOverlayScrollbars/themes/OverlayScrollbars.min.css');
-    if (WMBOSGetTheme(configurations.className, themePath)) {
+    if (WMBOSGetTheme(configurations.className, themePath))
         WMBOSLoadStyles(element, configurations.className, WMBOSGetTheme(configurations.className, themePath));
-    }
 }
 
 function WMBOSLoadStyles(element, className, path) {
@@ -194,34 +121,31 @@ function WMBOSLoadStyles(element, className, path) {
         link.type = 'text/css'; 
         link.href = path;
         link.id = 'WMBOS-theme-' + className;
-        if (element.tagName.toUpperCase() === 'IFRAME') {
+        if (element.tagName.toUpperCase() === 'IFRAME')
             element.contentWindow.document.getElementsByTagName('HEAD')[0].appendChild(link);
-        } else {
+        else
             document.getElementsByTagName('HEAD')[0].appendChild(link);
-        }
     }
 }
 
 function WMBOSLoadScript(src, callback, element, configurations, callbacks) {
-    var s, r, t;
-    r = false;
-    s = document.createElement('script');
-    s.type = 'text/javascript';
-    s.src = src;
-    s.id = 'WMBOS-scripts-overlay-scrollbars';
-    s.onload = s.onreadystatechange = function () {
-        if (!r && (!this.readyState || this.readyState === 'complete')) {
-            r = true;
-            if (callback && element) {
-                callback(element, configurations, callbacks);
-            }
+    var scriptEl, isReady, target;
+    isReady = false;
+    scriptEl = document.createElement('script');
+    scriptEl.type = 'text/javascript';
+    scriptEl.src = src;
+    scriptEl.id = 'WMBOS-scripts-overlay-scrollbars';
+    scriptEl.onload = scriptEl.onreadystatechange = function () {
+        if (!isReady && (!this.readyState || this.readyState === 'complete')) {
+            isReady = true;
+            if (callback && element) callback(element, configurations, callbacks);
             return true;
         } else {
             return false;
         }
     };
-    t = document.getElementsByTagName('script')[0];
-    t.parentNode.insertBefore(s, t);
+    target = document.getElementsByTagName('script')[0];
+    target.parentNode.insertBefore(scriptEl, target);
 }
 
 function WMBOSHasScripts() {
@@ -229,9 +153,8 @@ function WMBOSHasScripts() {
 }
 
 function WMBOSHasTheme(element, className) {
-    if (element.tagName.toUpperCase() === 'IFRAME') {
+    if (element.tagName.toUpperCase() === 'IFRAME')
         return (element.contentWindow.document.querySelector('#WMBOS-theme-' + className));
-    }
     return (document.querySelector('#WMBOS-theme-' + className));
 }
 
@@ -248,10 +171,13 @@ function WMBOSGetTheme(className, themePath) {
         'os-theme-thin-dark',
         'os-theme-minimal-light'
     ];
-    if (className && themePath) {
+    if (className && themePath)
         return themePath;
-    } else if (className && themes.includes(className)) {
+    else if (className && themes.includes(className))
         return './_content/WMBlazorOverlayScrollbars/themes/' + className + '.css';
-    }
     return null;
+}
+
+function WMBOSGetReferenceId(element) {
+    return element.getAttribute('data-reference-id');
 }
