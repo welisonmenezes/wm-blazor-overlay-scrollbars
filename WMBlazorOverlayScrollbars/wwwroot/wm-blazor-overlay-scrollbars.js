@@ -50,21 +50,77 @@ function WMBOSInitJS(element, configurations, callbacks) {
     console.log(window['WMBOSInstances']);
 }
 
-function WMBOSInitCallbacks(config, element, callbacks) {
-    config.callbacks = {
-        onInitialized: function() {  WMBOSCOnInitialized(element, callbacks); }
-    };
-}
-
 function WMBOSGetReferenceId(element) {
     return element.getAttribute('data-reference-id');
 }
 
+function WMBOSInitCallbacks(config, element, callbacks) {
+    config.callbacks = {
+        onInitialized: function() {  WMBOSCOnInitialized(element, callbacks); },
+        onInitializationWithdrawn: function() {  WMBOSCOnInitializationWithdrawn(callbacks); },
+        onDestroyed: function() {  WMBOSCOnDestroyed(callbacks); },
+        onScrollStart: function() {  WMBOSCOnScrollStart(callbacks); },
+        onScroll: function() {  WMBOSCOnScroll(callbacks); },
+        onScrollStop: function() {  WMBOSCOnScrollStop(callbacks); },
+        onContentSizeChanged: function() {  WMBOSCOnContentSizeChanged(callbacks); },
+        onHostSizeChanged: function() {  WMBOSCOnHostSizeChanged(callbacks); },
+        onUpdated: function() {  WMBOSCOnUpdated(callbacks); }
+    };
+}
+
 function WMBOSCOnInitialized(element, callbacks) {
     if(callbacks && callbacks['projectName'] && callbacks['onInitialized']) {
-        DotNet.invokeMethodAsync('BlazorWasmDemo', 'MyOnInitialized');
+        DotNet.invokeMethodAsync(callbacks['projectName'], callbacks['onInitialized']);
     }
     element.parentElement.classList.remove('loading');
+}
+
+function WMBOSCOnInitializationWithdrawn(callbacks) {
+    if(callbacks && callbacks['projectName'] && callbacks['onInitializationWithdrawn']) {
+        DotNet.invokeMethodAsync(callbacks['projectName'], callbacks['onInitializationWithdrawn']);
+    }
+}
+
+function WMBOSCOnDestroyed(callbacks) {
+    if(callbacks && callbacks['projectName'] && callbacks['onDestroyed']) {
+        DotNet.invokeMethodAsync(callbacks['projectName'], callbacks['onDestroyed']);
+    }
+}
+
+function WMBOSCOnScrollStart(callbacks) {
+    if(callbacks && callbacks['projectName'] && callbacks['onScrollStart']) {
+        DotNet.invokeMethodAsync(callbacks['projectName'], callbacks['onScrollStart']);
+    }
+}
+
+function WMBOSCOnScroll(callbacks) {
+    if(callbacks && callbacks['projectName'] && callbacks['onScroll']) {
+        DotNet.invokeMethodAsync(callbacks['projectName'], callbacks['onScroll']);
+    }
+}
+
+function WMBOSCOnScrollStop(callbacks) {
+    if(callbacks && callbacks['projectName'] && callbacks['onScrollStop']) {
+        DotNet.invokeMethodAsync(callbacks['projectName'], callbacks['onScrollStop']);
+    }
+}
+
+function WMBOSCOnContentSizeChanged(callbacks) {
+    if(callbacks && callbacks['projectName'] && callbacks['onContentSizeChanged']) {
+        DotNet.invokeMethodAsync(callbacks['projectName'], callbacks['onContentSizeChanged']);
+    }
+}
+
+function WMBOSCOnHostSizeChanged(callbacks) {
+    if(callbacks && callbacks['projectName'] && callbacks['onHostSizeChanged']) {
+        DotNet.invokeMethodAsync(callbacks['projectName'], callbacks['onHostSizeChanged']);
+    }
+}
+
+function WMBOSCOnUpdated(callbacks) {
+    if(callbacks && callbacks['projectName'] && callbacks['onUpdated']) {
+        DotNet.invokeMethodAsync(callbacks['projectName'], callbacks['onUpdated']);
+    }
 }
 
 function WMBOSRunInitAsync(element, configurations, callbacks, callback) {
@@ -144,11 +200,18 @@ function WMBOSHasTheme(className) {
 }
 
 function WMBOSGetTheme(className, themePath) {
-    var themes = ['os-theme-block-dark', 'os-theme-block-light', 
-    'os-theme-minimal-dark', 'os-theme-minimal-light', 
-    'os-theme-round-dark', 'os-theme-round-light', 
-    'os-theme-thick-dark', 'os-theme-thick-light', 
-    'os-theme-thin-dark', 'os-theme-minimal-light'];
+    var themes = [
+        'os-theme-block-dark',
+        'os-theme-block-light',
+        'os-theme-minimal-dark',
+        'os-theme-minimal-light',
+        'os-theme-round-dark',
+        'os-theme-round-light',
+        'os-theme-thick-dark',
+        'os-theme-thick-light',
+        'os-theme-thin-dark',
+        'os-theme-minimal-light'
+    ];
     if (className && themePath) {
         return themePath;
     } else if (className && themes.includes(className)) {

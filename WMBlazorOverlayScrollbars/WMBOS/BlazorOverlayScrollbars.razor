@@ -33,6 +33,30 @@
     [Parameter]
     public string CallbackOnInitialized { get; set; }
 
+    [Parameter]
+    public string CallbackOnInitializationWithdrawn { get; set; }
+
+    [Parameter]
+    public string CallbackOnDestroyed { get; set; }
+
+    [Parameter]
+    public string CallbackOnScrollStart { get; set; }
+
+    [Parameter]
+    public string CallbackOnScroll { get; set; }
+
+    [Parameter]
+    public string CallbackOnScrollStop { get; set; }
+
+    [Parameter]
+    public string CallbackOnContentSizeChanged { get; set; }
+
+    [Parameter]
+    public string CallbackOnHostSizeChanged { get; set; }
+
+    [Parameter]
+    public string CallbackOnUpdated { get; set; }
+
     [Inject]
     protected IWMBOS TheWMBOS { get; set; } 
 
@@ -56,6 +80,14 @@
             Callbacks = new Dictionary<string, string>();
                 Callbacks["projectName"] = ProjectName;
                 Callbacks["onInitialized"] = CallbackOnInitialized;
+                Callbacks["onInitializationWithdrawn"] = CallbackOnInitializationWithdrawn;
+                Callbacks["onDestroyed"] = CallbackOnDestroyed;
+                Callbacks["onScrollStart"] = CallbackOnScrollStart;
+                Callbacks["onScroll"] = CallbackOnScroll;
+                Callbacks["onScrollStop"] = CallbackOnScrollStop;
+                Callbacks["onContentSizeChanged"] = CallbackOnContentSizeChanged;
+                Callbacks["onHostSizeChanged"] = CallbackOnHostSizeChanged;
+                Callbacks["onUpdated"] = CallbackOnUpdated;
             
             await TheWMBOS.Init(WMBOSReference, Configurations, Callbacks);
         }
