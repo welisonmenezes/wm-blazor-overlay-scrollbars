@@ -15,6 +15,34 @@ export function WMBOSDestroy(referenceId) {
     delete window['WMBOSInstances'][referenceId];
 }
 
+export function WMBOSUpdate(referenceId, force) {
+    var instance = window['WMBOSInstances'][referenceId];
+    if (instance) {
+        instance.update(force);
+    }
+}
+
+export function WMBOSScroll(referenceId, x, y, duration) {
+    var instance = window['WMBOSInstances'][referenceId];
+    if (instance) {
+        instance.scroll({x: x, y: y}, duration);
+    }
+}
+
+export function WMBOSSleep(referenceId, force) {
+    var instance = window['WMBOSInstances'][referenceId];
+    if (instance) {
+        instance.sleep(force);
+    }
+}
+
+export function WMBOSScrollStop(referenceId, force) {
+    var instance = window['WMBOSInstances'][referenceId];
+    if (instance) {
+        instance.scrollStop(force);
+    }
+}
+
 function WMBOSInitJS(element, configurations, callbacks) {
     var config  = (configurations) ? configurations : {};
     WMBOSInitCallbacks(config, element, callbacks);

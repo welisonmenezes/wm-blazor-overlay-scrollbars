@@ -38,4 +38,34 @@ public sealed class WMBOSCore: IWMBOS
     {
         await this.Init(element, configurations, callbacks);
     }
+
+    public async Task Update(string referenceId, bool force)
+    {
+        var module = await this.Module;
+        await module.InvokeVoidAsync("WMBOSUpdate", referenceId, force);
+    }
+
+    public async Task Scroll(string referenceId, string x, string y, int duration)
+    {
+        var module = await this.Module;
+        await module.InvokeVoidAsync("WMBOSScroll", referenceId, x, y, duration);
+    }
+
+    public async Task Scroll(string referenceId, int x, int y, int duration)
+    {
+        var module = await this.Module;
+        await module.InvokeVoidAsync("WMBOSScroll", referenceId, x, y, duration);
+    }
+
+    public async Task Sleep(string referenceId)
+    {
+        var module = await this.Module;
+        await module.InvokeVoidAsync("WMBOSSleep", referenceId);
+    }
+
+    public async Task ScrollStop(string referenceId)
+    {
+        var module = await this.Module;
+        await module.InvokeVoidAsync("WMBOSScrollStop", referenceId);
+    }
 }

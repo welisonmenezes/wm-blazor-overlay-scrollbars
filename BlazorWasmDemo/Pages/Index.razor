@@ -73,6 +73,11 @@
     <div>
         <button class="btn btn-primary btn-sm" @onclick="@(e => MyDestroy())">Destroy</button>
         <button class="btn btn-primary btn-sm" @onclick="@(e => MyConstroy())">Constroy</button>
+        <button class="btn btn-primary btn-sm" @onclick="@(e => MyUpdate())">Update</button>
+        <button class="btn btn-primary btn-sm" @onclick="@(e => MyScroll(null, "50%"))">Scroll to X 50%</button>
+        <button class="btn btn-primary btn-sm" @onclick="@(e => MyScroll(0, 0))">Scroll to X 0</button>
+        <button class="btn btn-primary btn-sm" @onclick="@(e => MySleep())">Sleep</button>
+        <button class="btn btn-primary btn-sm" @onclick="@(e => MyScrollStop())">Scroll Stop</button>
     </div>
 
     <br><br><br>
@@ -89,7 +94,8 @@
     {
         configurations = new WMBOSConfigurations {
             className = "os-theme-block-dark",
-            themePath = "https://kingsora.github.io/OverlayScrollbars/etc/os-theme-block-dark.css"
+            themePath = "https://kingsora.github.io/OverlayScrollbars/etc/os-theme-block-dark.css",
+            resize = "both"
         };
         configurations.overflowBehavior.x = "hidden";
     }
@@ -108,5 +114,30 @@
     public async void MyDestroy() 
     {
         await theOverlay.Destroy();
+    }
+
+    public async void MyUpdate() 
+    {
+        await theOverlay.Update(true);
+    }
+
+    public async void MyScroll(string x, string y) 
+    {
+        await theOverlay.Scroll(x, y);
+    }
+
+    public async void MyScroll(int x, int y) 
+    {
+        await theOverlay.Scroll(x, y);
+    }
+
+    public async void MySleep() 
+    {
+        await theOverlay.Sleep();
+    }
+
+    public async void MyScrollStop() 
+    {
+        await theOverlay.ScrollStop();
     }
 }

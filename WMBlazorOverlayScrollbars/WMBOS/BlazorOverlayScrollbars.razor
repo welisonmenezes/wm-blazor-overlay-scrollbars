@@ -80,4 +80,29 @@
     {
        await TheWMBOS.Init(WMBOSReference, Configurations, Callbacks);
     }
+
+    public async Task Update(bool force = false)
+    {
+       await TheWMBOS.Update(ReferenceId, force);
+    }
+
+    public async Task Scroll(string x = "0", string y = "0", int duration = 1000)
+    {
+       await TheWMBOS.Scroll(ReferenceId, x, y, duration);
+    }
+
+    public async Task Scroll(int x = 0, int y = 0, int duration = 1000)
+    {
+       await TheWMBOS.Scroll(ReferenceId, x, y, duration);
+    }
+
+    public async Task Sleep()
+    {
+       await TheWMBOS.Sleep(ReferenceId);
+    }
+
+    public async Task ScrollStop()
+    {
+       await TheWMBOS.ScrollStop(ReferenceId);
+    }
 }
