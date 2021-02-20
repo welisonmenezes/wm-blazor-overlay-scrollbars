@@ -5,6 +5,13 @@ A Blazor scrollbar component which hides native scrollbars, provides custom styl
 This component is based on OverlayScrollbar witch is found in: https://kingsora.github.io/OverlayScrollbars/
 
 ---
+
+## Live Demo
+https://welisonmenezes.github.io/wm-blazor-overlay-scrollbars/
+
+## Nuget Package
+https://www.nuget.org/packages/WMBlazorOverlayScrollbars/
+
 ## Setup
 
 First, import the namespaces in `_Imports.razor`

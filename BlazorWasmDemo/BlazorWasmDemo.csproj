@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <!-- <PackageReference Include="WMBlazorOverlayScrollbars " Version="1.0.0" /> -->
     <ProjectReference Include="..\WMBlazorOverlayScrollbars\WMBlazorOverlayScrollbars.csproj" />
   </ItemGroup>
 

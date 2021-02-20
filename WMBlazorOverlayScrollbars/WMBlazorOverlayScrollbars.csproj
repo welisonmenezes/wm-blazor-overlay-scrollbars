@@ -2,6 +2,13 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <Authors>Welison Menezes</Authors>
+    <Description>A Blazor scrollbar component which hides native scrollbars, provides custom styleable overlay scrollbars. This component is based on OverlayScrollbar.</Description>
+    <Copyright>MIT</Copyright>
+    <PackageProjectUrl>https://welisonmenezes.github.io/wm-blazor-overlay-scrollbars/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/welisonmenezes/wm-blazor-overlay-scrollbars</RepositoryUrl>
+    <RepositoryType>Github</RepositoryType>
+    <PackageTags>custom-scrollbar overlay-scrollbars blazor blazor-server blazor-wasm blazor-custom-scrollbar blazor-nice-scrollbar nice-scrollbar blazor-overlay-scrollbars</PackageTags>
   </PropertyGroup>
 
   
