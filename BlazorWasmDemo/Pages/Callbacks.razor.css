@@ -1,0 +1,16 @@
+::deep .os-host {
+    border: 2px solid #4967fe !important;
+    border-radius: 4px;
+    padding: 5px;
+}
+
+.reports {
+    font-size: 14px;
+}
+.reports h4 {
+    font-size: 18px;
+    margin-bottom: 1rem;
+}
+.reports li {
+    margin-bottom: .5rem;
+}
