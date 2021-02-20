@@ -1,0 +1,213 @@
+@import '_content/WMBlazorOverlayScrollbars/WMBlazorOverlayScrollbars.bundle.scp.css';
+
+/* /Pages/Basic.razor.rz.scp.css */
+[b-7wnh2sm298] .os-host,
+[b-7wnh2sm298] .os-host-textarea,
+[b-7wnh2sm298] iframe {
+    border: 2px solid #4967fe !important;
+    border-radius: 4px;
+    padding: 5px;
+}
+
+[b-7wnh2sm298] iframe {
+    background-color: #f2f2f2;
+}
+/* /Pages/Callbacks.razor.rz.scp.css */
+[b-ck6lzm2tyu] .os-host {
+    border: 2px solid #4967fe !important;
+    border-radius: 4px;
+    padding: 5px;
+}
+
+.reports[b-ck6lzm2tyu] {
+    font-size: 14px;
+}
+.reports h4[b-ck6lzm2tyu] {
+    font-size: 18px;
+    margin-bottom: 1rem;
+}
+.reports li[b-ck6lzm2tyu] {
+    margin-bottom: .5rem;
+}
+/* /Pages/Configurations.razor.rz.scp.css */
+[b-34dolrnouk] .os-host {
+    border: 2px solid #4967fe;
+    border-radius: 4px;
+    padding: 5px 20px 20px 5px;
+}
+/* /Pages/Methods.razor.rz.scp.css */
+[b-lhk9gqqkz6] .os-host {
+    border: 2px solid #4967fe !important;
+    border-radius: 4px;
+    padding: 5px;
+}
+/* /Pages/Themes.razor.rz.scp.css */
+[b-av198kjbxo] .os-host {
+    border: 2px solid #4967fe;
+    border-radius: 4px;
+    padding: 5px 20px 20px 5px;
+}
+/* /Shared/MainLayout.razor.rz.scp.css */
+.page[b-65dzhjejg0] {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.main[b-65dzhjejg0] {
+    flex: 1;
+    overflow: hidden;
+}
+
+
+[b-65dzhjejg0] .os-host {
+    height: 200px;
+    max-width: 600px;
+}
+[b-65dzhjejg0] .os-host-textarea {
+    height: 150px;
+    max-width: 400px;
+}
+[b-65dzhjejg0] iframe {
+    display: block;
+    border: none;
+    width: 100%;
+    max-width: 600px;
+    height: 250px;
+}
+[b-65dzhjejg0] .main > .WMBOS > .os-host {
+    height: 100vh;
+    max-width: none;
+}
+
+.sidebar[b-65dzhjejg0] {
+    background-image: linear-gradient(180deg, rgb(5, 39, 103) 0%, #3a0647 70%);
+}
+
+.top-row[b-65dzhjejg0] {
+    background-color: #f7f7f7;
+    border-bottom: 1px solid #d6d5d5;
+    justify-content: flex-end;
+    height: 3.5rem;
+    display: flex;
+    align-items: center;
+    z-index: 9;
+}
+
+    .top-row[b-65dzhjejg0]  a, .top-row .btn-link[b-65dzhjejg0] {
+        white-space: nowrap;
+        margin-left: 1.5rem;
+    }
+
+    .top-row a:first-child[b-65dzhjejg0] {
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+@media (max-width: 640.98px) {
+    .top-row:not(.auth)[b-65dzhjejg0] {
+        display: none;
+    }
+
+    .top-row.auth[b-65dzhjejg0] {
+        justify-content: space-between;
+    }
+
+    .top-row a[b-65dzhjejg0], .top-row .btn-link[b-65dzhjejg0] {
+        margin-left: 0;
+    }
+
+    .main[b-65dzhjejg0]  > .WMBOS > .os-host {
+        height: calc(100vh - 56px);
+    }
+}
+
+@media (min-width: 641px) {
+    .page[b-65dzhjejg0] {
+        flex-direction: row;
+    }
+
+    .sidebar[b-65dzhjejg0] {
+        width: 250px;
+        height: 100vh;
+        position: sticky;
+        top: 0;
+    }
+
+    .main[b-65dzhjejg0] {
+        max-width: calc(100vw - 250px);
+    }
+
+    .top-row[b-65dzhjejg0] {
+        position: sticky;
+        top: 0;
+    }
+
+    .main > div[b-65dzhjejg0] {
+        padding-left: 2rem !important;
+        padding-right: 1.5rem !important;
+    }
+}
+/* /Shared/NavMenu.razor.rz.scp.css */
+.navbar-toggler[b-bb90h1r1ma] {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.top-row[b-bb90h1r1ma] {
+    height: 3.5rem;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.navbar-brand[b-bb90h1r1ma] {
+    font-size: 1.1rem;
+}
+
+.oi[b-bb90h1r1ma] {
+    width: 2rem;
+    font-size: 1.1rem;
+    vertical-align: text-top;
+    top: -2px;
+}
+
+.nav-item[b-bb90h1r1ma] {
+    font-size: 0.9rem;
+    padding-bottom: 0.5rem;
+}
+
+    .nav-item:first-of-type[b-bb90h1r1ma] {
+        padding-top: 1rem;
+    }
+
+    .nav-item:last-of-type[b-bb90h1r1ma] {
+        padding-bottom: 1rem;
+    }
+
+    .nav-item[b-bb90h1r1ma]  a {
+        color: #d7d7d7;
+        border-radius: 4px;
+        height: 3rem;
+        display: flex;
+        align-items: center;
+        line-height: 3rem;
+    }
+
+.nav-item[b-bb90h1r1ma]  a.active {
+    background-color: rgba(255,255,255,0.25);
+    color: white;
+}
+
+.nav-item[b-bb90h1r1ma]  a:hover {
+    background-color: rgba(255,255,255,0.1);
+    color: white;
+}
+
+@media (min-width: 641px) {
+    .navbar-toggler[b-bb90h1r1ma] {
+        display: none;
+    }
+
+    .collapse[b-bb90h1r1ma] {
+        /* Never collapse the sidebar for wide screens */
+        display: block;
+    }
+}
